@@ -14,3 +14,8 @@ Lead Management System to manage leads efficiently.
 * Rails 6
 * Devise Gem
 * Pundit Gem
+
+## Credits
+
+* Ghulam Murtaza (GM) : [GitHUb](https://github.com/murtaza512)
+* Stila (Bootstrap Template) : [GitHub](https://github.com/stisla/stisla)

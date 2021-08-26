@@ -17,5 +17,5 @@ Lead Management System to manage leads efficiently.
 
 ## Credits
 
-* Ghulam Murtaza (GM) : [GitHUb](https://github.com/murtaza512)
+* Ghulam Murtaza (GM) : [GitHub](https://github.com/murtaza512)
 * Stila (Bootstrap Template) : [GitHub](https://github.com/stisla/stisla)

@@ -1,0 +1,25 @@
+
+
+<div id="app">
+    <div class="main-wrapper">
+
+      <%= render "dashboard/header" %>
+      <%= render "dashboard/navbar" %>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Dashboard</h1>
+          </div>
+          <div class="col">
+            <h3><%= current_user.email %></h3>
+            <h3><%= current_user.user_roles.find(1).role.role_name %></h3>
+          </div>
+        </section>
+      </div>
+
+      <%= render "dashboard/footer" %>
+
+    </div>
+  </div>

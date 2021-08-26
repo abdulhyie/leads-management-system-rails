@@ -1,0 +1,85 @@
+
+
+<div id="app">
+    <div class="main-wrapper">
+
+      <%= render "dashboard/header" %>
+      <%= render "dashboard/navbar" %>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>All Leads</h1>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Leads</h4>
+                  <div class="card-header-form">
+                    <form>
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                          <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <th>Project Name</th>
+                        <th>Start Date</th>
+                        <th>Progress</th>
+                        <th>Client's Name</th>
+                        <th>Assigned BD</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                      <% @leads.each do |lead| %>
+                      <tr>
+                        <td><%= lead.project_name %></td>
+                        <td>
+                          <%= lead.created_at.strftime("%m-%d-%Y") %>
+                        </td>
+                        <td class="align-middle">
+                          <div class="progress" data-height="4" data-toggle="tooltip" title="70%">
+                            <div class="progress-bar bg-success" data-width="70%"></div>
+                          </div>
+                        </td>
+                        <td>
+                          <%= lead.client_name %> <br>
+                        </td>
+                        <td><%= lead.user.email %></td>
+                        <td>
+                          <% if lead.status == "Ongoing" %>
+                            <div class="badge badge-primary"><%= lead.status %></div>
+                          <% elsif lead.status == "Not Started" %>
+                            <div class="badge badge-warning"><%= lead.status %></div>
+                          <% elsif lead.status == "Complete" %>
+                            <div class="badge badge-success"><%= lead.status %></div>
+                          <% end %>
+                        </td>
+                        <td>
+                          <a href="#" class="btn btn-primary">Details</a>
+                          <%= link_to "Delete", lead_path(lead.id), method: :delete, class: "btn btn-danger" %>
+                        </td>
+                      </tr>
+                      <% end %>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <%= render "dashboard/footer" %>
+
+    </div>
+  </div>

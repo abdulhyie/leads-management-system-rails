@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comment_body: MyText
+  phase: one
+  user: one
+  created_at: 2021-08-24 16:32:09
+
+two:
+  comment_body: MyText
+  phase: two
+  user: two
+  created_at: 2021-08-24 16:32:09

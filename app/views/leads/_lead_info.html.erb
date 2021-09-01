@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-lg-8 col-md-12 col-12 col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h4>Lead's Information</h4>
+        <div class="card-header-action">
+          <div class="">
+            <% if @lead.status != "Complete" && @lead.user.id == current_user.id %>
+              <%= link_to "Mark as Sale", "/lead/mark_complete/" + @lead.id.to_s, method: :patch, class: "btn btn-primary" %>
+            <% end %>
+            <%# <a href="#" class="btn btn-primary">Mark as sale</a> %>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <h3 class="col-md-12 text-primary"><%= @lead.project_name %></h3>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-md-12 col-sm-12" style="margin-bottom: 20px;">
+            <div class="list-group">
+              <a href="#" onclick="return false;" class="list-group-item list-group-item-action active">
+                <h5>Client's Info</h5>
+              </a>
+              <a href="" onclick="return false;" class="list-group-item list-group-item-action"><%= @lead.client_name %></a>
+              <a href="" onclick="return false;" class="list-group-item list-group-item-action"><%= @lead.client_email %></a>
+              <a href="" onclick="return false;" class="list-group-item list-group-item-action"><%= @lead.client_contact %></a>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="list-group">
+              <a href="#" onclick="return false;" class="list-group-item list-group-item-action active">
+                <h5>Start Date</h5>
+              </a>
+              <a href="" onclick="return false;" class="list-group-item list-group-item-action"><%= @lead.created_at.strftime("%d %B, %Y, %I:%M %p") %></a>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="list-group">
+              <a href="#" onclick="return false;" class="list-group-item list-group-item-action active">
+                <h5>Platform</h5>
+              </a>
+              <a href="" onclick="return false;" class="list-group-item list-group-item-action"><%= @lead.platform %></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="statistic-details mt-sm-4 ">
+        <div class="statistic-details-item">
+          <div class="detail-value"><%= @lead.phases.size %></div>
+          <div class="detail-name">Phases</div>
+        </div>
+        <div class="statistic-details-item">
+          <div class="detail-value"><%= @user_size %></div>
+          <div class="detail-name">Users Working</div>
+        </div>
+        <div class="statistic-details-item">
+          <div class="detail-value"><%= @comment_size %></div>
+          <div class="detail-name">Comments</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4 col-md-12 col-12 col-sm-12">
+    <div class="card author-box card-primary">
+      <div class="card-header">
+        <h6>Lead Generator</h6>
+      </div>
+      <div class="card-body">
+        <div class="author-box-left">
+          <%= image_tag "avatar-1.png", class: "rounded-circle author-box-picture" %>
+          <div class="clearfix"></div>
+        </div>
+        <div class="author-box-details">
+          <div class="author-box-name">
+            <a href="#"><%= @lead.user.name %></a>
+          </div>
+          <div class="author-box-job"><%= @lead.user.user_roles.first.role.role_name %></div>
+          <div class="author-box-job"><%= @lead.user.email %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+
+
+<div id="app">
+    <div class="main-wrapper">
+
+      <%= render "dashboard/header" %>
+      <%= render "dashboard/navbar" %>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Assign Engineer</h1>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+              <div class="card card-primary">
+                <div class="card-header"><h4>Assign Engineer to this Phase</h4></div>
+
+                <div class="card-body">
+                  <%= form_with model: @phase_assignment do |f| %>
+                    <%= f.hidden_field :phase_id, value: @phase.id %>
+                    <div class="row">
+                      <div class="form-group col-12">
+                        <label>Engineer</label>
+                        <%= f.select :user_id, @engineers.map { |u| [u.user.name + "  (" + u.user.email + ")", u.user.id]}, {prompt: "Select Engineer"}, class: "form-control" %>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <%= f.submit "Assign Engineer", class: "btn btn-primary btn-lg btn-block"%>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+              <div class="card card-primary">
+                <div class="card-header"><h4>Assign Multiple Engineers to this Phase</h4></div>
+
+                <div class="card-body">
+                  <%= form_with url: phase_assignment_generate_form_path, method: :get do |f| %>
+                    <%= f.hidden_field :phase_id, value: @phase.id %>
+                    <div class="row">
+                      <div class="form-group col-12">
+                        <label>Number of engineers you want to add</label>
+                        <%= f.text_field :num_selects, class: "form-control" %>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <%= f.submit "Generate Form", class: "btn btn-primary btn-lg btn-block"%>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <%= render "dashboard/footer" %>
+
+    </div>
+</div>

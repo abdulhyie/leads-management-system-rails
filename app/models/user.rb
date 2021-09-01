@@ -10,4 +10,5 @@ class User < ApplicationRecord
   has_many :phase_assignments
   has_many :phases, through: :phase_assignment
   has_many :comments
+  has_many :phases
 end

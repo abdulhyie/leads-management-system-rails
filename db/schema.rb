@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_24_114810) do
+ActiveRecord::Schema.define(version: 2021_08_31_112143) do
 
   create_table "comments", force: :cascade do |t|
     t.text "comment_body"
@@ -53,7 +53,10 @@ ActiveRecord::Schema.define(version: 2021_08_24_114810) do
     t.integer "lead_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.text "manager_comment"
     t.index ["lead_id"], name: "index_phases_on_lead_id"
+    t.index ["user_id"], name: "index_phases_on_user_id"
   end
 
   create_table "project_leads", force: :cascade do |t|
@@ -88,6 +91,7 @@ ActiveRecord::Schema.define(version: 2021_08_24_114810) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -98,6 +102,7 @@ ActiveRecord::Schema.define(version: 2021_08_24_114810) do
   add_foreign_key "phase_assignments", "phases"
   add_foreign_key "phase_assignments", "users"
   add_foreign_key "phases", "leads"
+  add_foreign_key "phases", "users"
   add_foreign_key "project_leads", "leads"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"

@@ -1,0 +1,47 @@
+
+
+<div id="app">
+    <div class="main-wrapper">
+
+      <%= render "dashboard/header" %>
+      <%= render "dashboard/navbar" %>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Assign Engineers</h1>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+              <div class="card card-primary">
+                <div class="card-header"><h4>Assign Engineers to this Phase</h4></div>
+
+                <div class="card-body">
+                  <div class="row">
+                    <h4 class=" col-md-12 text-center text-primary">Engineers</h4>
+                  </div>
+                  <%= form_with url: "/" do |f| %>
+                    <%= f.hidden_field :phase_id, value: @phase_id %>
+                    <% for i in 1..@num_selects %>
+                      <div class="row">
+                        <div class="form-group col-12">
+                          <%= f.select :user_id, @engineers.map { |u| [u.user.name + "  (" + u.user.email + ")", u.user.id]}, {prompt: "Select Engineer"}, class: "form-control" %>
+                        </div>
+                      </div>
+                    <% end %>
+                    <div class="form-group">
+                      <%= f.submit "Assign Engineers", class: "btn btn-primary btn-lg btn-block"%>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <%= render "dashboard/footer" %>
+
+    </div>
+</div>

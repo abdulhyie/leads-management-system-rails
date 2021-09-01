@@ -7,20 +7,25 @@
       <a href=<%= root_path %>>LM</a>
     </div>
     <ul class="sidebar-menu">
-
       <li class="active"><a class="nav-link" href=<%= root_path %>><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
-      <li class="menu-header">Manage Leads</li>
+      <li class="menu-header">Leads & Projects</li>
       <li class=""><a class="nav-link" href=<%= leads_path %>><i class="fas fa-stream"></i> <span>All Leads</span></a></li>
-      <li class=""><a class="nav-link" href=<%= new_lead_path %>><i class="fas fa-dice-d6"></i> <span>Initiate Lead</span></a></li>
-      <li class="menu-header">Manage Users</li>
-      <li class=""><a class="nav-link" href=<%= all_users_path %>><i class="fas fa-users"></i> <span>All Users</span></a></li>
-      <li class=""><a class="nav-link" href=<%= new_user_path %>><i class="fas fa-user-plus"></i> <span>Add User</span></a></li>
-      <li class=""><a class="nav-link" href=<%= assign_roles_path %>><i class="fas fa-id-badge"></i> <span>Assign Roles</span></a></li>
-      <li class="menu-header">Manage Roles</li>
-      <li class=""><a class="nav-link" href=<%= roles_path %>><i class="fas fa-briefcase"></i> <span>All Roles</span></a></li>
-      <li class=""><a class="nav-link" href=<%= new_role_path %>><i class="fas fa-plus"></i> <span>Add Roles</span></a></li>
-      <li class=""><a class="nav-link" href=<%= user_roles_path %>><i class="fas fa-directions"></i> <span>View Assigned Roles</span></a></li>
-      
+      <li class=""><a class="nav-link" href=<%= user_my_phases_path %>><i class="fas fa-file-alt"></i> <span>My Phases</span></a></li>
+      <li class=""><a class="nav-link" href=<%= projects_path %>><i class="fas fa-project-diagram"></i> <span>All Projects</span></a></li>
+      <% if user_is?("Super Admin") || user_is?("Business Developer") %>
+        <li class=""><a class="nav-link" href=<%= new_lead_path %>><i class="fas fa-dice-d6"></i> <span>Initiate Lead</span></a></li>
+        <li class=""><a class="nav-link" href=<%= phase_requests_path %>><i class="fas fa-tasks"></i> <span>Phase Requests</span></a></li>
+      <% end %>
+      <% if user_is?("Super Admin") %>
+        <li class="menu-header">Manage Users</li>
+        <li class=""><a class="nav-link" href=<%= all_users_path %>><i class="fas fa-users"></i> <span>All Users</span></a></li>
+        <li class=""><a class="nav-link" href=<%= new_user_path %>><i class="fas fa-user-plus"></i> <span>Add User</span></a></li>
+        <li class=""><a class="nav-link" href=<%= assign_roles_path %>><i class="fas fa-id-badge"></i> <span>Assign Roles</span></a></li>
+        <li class="menu-header">Manage Roles</li>
+        <li class=""><a class="nav-link" href=<%= roles_path %>><i class="fas fa-briefcase"></i> <span>All Roles</span></a></li>
+        <li class=""><a class="nav-link" href=<%= new_role_path %>><i class="fas fa-plus"></i> <span>Add Roles</span></a></li>
+        <li class=""><a class="nav-link" href=<%= user_roles_path %>><i class="fas fa-directions"></i> <span>View Assigned Roles</span></a></li>
+      <% end %>
       <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
         <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-primary btn-lg btn-block btn-icon-split" %>
       </div>

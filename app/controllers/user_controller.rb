@@ -4,7 +4,6 @@ class UserController < ApplicationController
 
   # Dashboard
   def index
-    
   end
 
   # All Users
@@ -54,6 +53,10 @@ class UserController < ApplicationController
     end
   end
 
+  def my_phases
+    @phases = Phase.all.where(user_id: current_user.id)
+  end
+
   private
 
   def check_user_session
@@ -65,7 +68,7 @@ class UserController < ApplicationController
   end
 
   def strip_user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
   def strip_user_role_params
     params.require(:user_role).permit(:user_id, :role_id)

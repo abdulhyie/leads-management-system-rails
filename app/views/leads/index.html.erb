@@ -47,14 +47,22 @@
                           <%= lead.created_at.strftime("%m-%d-%Y") %>
                         </td>
                         <td class="align-middle">
-                          <div class="progress" data-height="4" data-toggle="tooltip" title="70%">
-                            <div class="progress-bar bg-success" data-width="70%"></div>
+                          <% if lead.phases.size > 0 %>
+                            <% n = lead.phases.where(phase_status: "Complete").size %>
+                            <% d = lead.phases.size %>
+                            <% percentage = Float(n) / Float(d) * 100 %>
+                            <% percentage = percentage.round(0) %>
+                          <% else %>
+                            <% percentage = 0 %>
+                          <% end %>
+                          <div class="progress" data-height="4" data-toggle="tooltip" title=<%= percentage %>>
+                            <div class="progress-bar bg-success" data-width=<%= percentage %>></div>
                           </div>
                         </td>
                         <td>
                           <%= lead.client_name %> <br>
                         </td>
-                        <td><%= lead.user.email %></td>
+                        <td><%= lead.user.name %></td>
                         <td>
                           <% if lead.status == "Ongoing" %>
                             <div class="badge badge-primary"><%= lead.status %></div>
@@ -65,8 +73,10 @@
                           <% end %>
                         </td>
                         <td>
-                          <a href="#" class="btn btn-primary">Details</a>
-                          <%= link_to "Delete", lead_path(lead.id), method: :delete, class: "btn btn-danger" %>
+                          <%= link_to "Details", lead_path(lead.id), class: "btn btn-primary" %>
+                          <% if user_is?("Super Admin") || user_is?("Business Developer") %>
+                            <%= link_to "Delete", lead_path(lead.id), method: :delete, class: "btn btn-danger" %>
+                          <% end %>
                         </td>
                       </tr>
                       <% end %>

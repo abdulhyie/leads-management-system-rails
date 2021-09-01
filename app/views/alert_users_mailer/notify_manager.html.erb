@@ -1,0 +1,9 @@
+<h4>Hi <%= @user.name %>,</h4>
+<br>
+<p><b><%= @phase.lead.user.name %></b> has assigned you a phase in lead (<%= @phase.lead.project_name %>). 
+You can either accpet or decline the phase.</p>
+<br>
+<%= link_to "Click here to view the phase.", "http://localhost:3000/phase_accept_decline/" + @phase.id.to_s %>
+<br>
+
+<p>Thanks & Regards</p>

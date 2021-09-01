@@ -12,9 +12,80 @@
           <div class="section-header">
             <h1>Dashboard</h1>
           </div>
-          <div class="col">
-            <h3><%= current_user.email %></h3>
-            <h3><%= current_user.user_roles.find(1).role.role_name %></h3>
+          <div class="row">
+            <div class="col-12 mb-4">
+              <div class="hero bg-primary text-white">
+                <div class="hero-inner">
+                  <h2>Welcome Back, <%= current_user.name %>!</h2>
+                  <p class="lead">Lead Management System.</p>
+                  <div class="mt-4">
+                    <a href=<%= edit_user_registration_path %> class="btn btn-outline-white btn-lg btn-icon icon-left"><i class="far fa-user"></i>Account Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1">
+                <div class="card-icon bg-primary">
+                  <i class="far fa-user"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Total Users</h4>
+                  </div>
+                  <div class="card-body">
+                    <%= User.all.size %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1">
+                <div class="card-icon bg-danger">
+                  <i class="far fa-newspaper"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Total Leads</h4>
+                  </div>
+                  <div class="card-body">
+                    <%= Lead.all.size %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1">
+                <div class="card-icon bg-warning">
+                  <i class="far fa-file"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Total Phases</h4>
+                  </div>
+                  <div class="card-body">
+                    <%= Phase.all.size %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1">
+                <div class="card-icon bg-success">
+                  <i class="fas fa-circle"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Total Projects</h4>
+                  </div>
+                  <div class="card-body">
+                    <%= ProjectLead.all.size %>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </div>

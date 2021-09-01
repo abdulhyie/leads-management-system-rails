@@ -22,7 +22,7 @@
                     <div class="row">
                       <div class="form-group col-12">
                         <label for="first_name">Name</label>
-                        <input id="first_name" type="text" class="form-control" name="first_name" autofocus>
+                        <%= f.text_field :name, class: "form-control", required: "true", autocomplete: "off", autofocus: "true"%>
                       </div>
                     </div>
 

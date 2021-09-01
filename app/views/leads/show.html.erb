@@ -1,0 +1,154 @@
+
+
+<div id="app">
+  <div class="main-wrapper">
+
+    <%= render "dashboard/header" %>
+    <%= render "dashboard/navbar" %>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <section class="section">
+        <div class="section-header">
+          <h1>Lead's Information</h1>
+        </div>
+
+        <%= render "leads/lead_info" %>
+
+        <div class="row">
+          <div class="col-md-1">
+            <h4>Phases</h4>
+          </div>
+          <div class="col-md-3">
+          <% if user_is?("Super Admin") || user_is?("Business Manager") %>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+              Add a new phase
+            </button>
+          <% end %>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <h1 class="section-title">All Phases</h1>
+          <div class="row">
+            <div class="col-12">
+              <div class="activities">
+                <% @phases.each do |phase| %>
+                <div class="activity">
+                  <div class="activity-icon bg-primary text-white shadow-primary">
+                    <i class="fas fa-code-branch"></i>
+                  </div>
+                  <div class="activity-detail">
+                    <div class="mb-1">
+                      <span class="text-job text-primary"> 2 min ago</span>
+                      <span class="bullet"></span>
+                      <a class="text-job" href="#"><%= phase.user.name %></a>
+                      <span class="bullet"></span>
+                      <a class="text-job" style="margin-right: 20px" href=<%= phase_path(phase.id) %>>View</a>
+                      <div class="float-right dropdown">
+                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                        <div class="dropdown-menu">
+                          <div class="dropdown-title">Options</div>
+                          <a href=<%= phase_path(phase.id) %> class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                          <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                          <div class="dropdown-divider"></div>
+                          <a href="#" class="dropdown-item has-icon text-danger"
+                            data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?"
+                            data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mb-2">
+                      <span class="text-job text-primary"><%= phase.due_date.strftime("%B %d, %Y . %I:%M %p") %></span>
+                      <span class="bullet"></span>
+                      <% if phase.phase_status == "Awaiting Manager" %>
+                        <span class="text-job text-warning"><%= phase.phase_status %></span>
+                      <% elsif phase.phase_status == "Declined by Manager" %>
+                        <span class="text-job text-danger"><%= phase.phase_status %></span>
+                      <% elsif phase.phase_status == "Ongoing" %>
+                        <span class="text-job text-info"><%= phase.phase_status %></span>
+                      <% elsif phase.phase_status == "Complete" %>
+                        <span class="text-job text-success"><%= phase.phase_status %></span>
+                      <% end %>
+                    </div>
+                    <p><%= raw phase.manager_comment %></p>
+                  </div>
+                </div>
+                <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <%= render "dashboard/footer" %>
+
+  </div>
+</div>
+
+<% if user_is?("Super Admin") || user_is?("Business Manager") %>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Phase</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= form_with model: @phase do |f| %>
+            <div class="row">
+              <div class="form-group col-12">
+                <label>Phase Type</label>
+                <select name="phase[phase_type]" class="form-control selectric">
+                  <option value="Test Project">Test Project</option>
+                  <option value="Interview">Interview</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="start_date">Start Date</label> <br>
+              <%= f.date_select :start_date, class: "form-control", required: "true"%>
+              <div class="invalid-feedback">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="due_date">Due Date</label> <br>
+              <%= f.date_select :due_date, class: "form-control", required: "true"%>
+              <div class="invalid-feedback">
+              </div>
+            </div>
+
+            <div class="form-divider">
+              Assign Technical Manager <small class="text-small"> Mandatory</small>
+            </div>
+            <div class="row">
+              <div class="form-group col-12">
+                <label>Managers</label>
+                <%= f.select :user_id, @managers.map { |u| [u.user.name, u.user.id]}, {prompt: "Select a manager"}, class: "form-control" %>
+              </div>
+            </div>
+
+        <%= f.hidden_field :lead_id, value: @lead.id  %>
+        <%= f.hidden_field :phase_status, value: "Awaiting Manager" %>
+            
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="form-group">
+              <%= f.submit class: "btn btn-primary btn-lg btn-block"%>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

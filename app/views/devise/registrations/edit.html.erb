@@ -1,43 +1,100 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+
+<div id="app">
+    <div class="main-wrapper">
+
+      <%= render "dashboard/header" %>
+      <%= render "dashboard/navbar" %>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Dashboard</h1>
+          </div>
+          <div class="row mt-sm-4">
+            <div class="col-12 col-md-12 col-lg-12">
+              <div class="card profile-widget">
+                <div class="profile-widget-header">
+                  <%= image_tag "avatar-1.png", class: "rounded-circle profile-widget-picture" %>
+                  <%# <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle profile-widget-picture"> %>
+                  <div class="profile-widget-items">
+                    <div class="profile-widget-item">
+                      <div class="profile-widget-item-label">Phases</div>
+                      <div class="profile-widget-item-value"><%= Phase.where(user_id: current_user.id).size %></div>
+                    </div>
+                    <div class="profile-widget-item">
+                      <div class="profile-widget-item-label">Projects</div>
+                      <div class="profile-widget-item-value"><%= ProjectLead.all.size %></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-widget-description">
+                  <div class="profile-widget-name d-inline"><%= current_user.name %> <div class="text-muted d-inline font-weight-normal"><div class="slash"></div><%= current_user.email %></div></div> <div class="text-muted d-inline font-weight-normal"><div class="slash"></div> <%= current_user.user_roles.first.role.role_name %></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-12">
+              <div class="card">
+                <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+                <form method="post" class="needs-validation" novalidate="">
+                  <div class="card-header">
+                    <h4>Edit Profile</h4>
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                        <div class="form-group col-md-12 col-12">
+                          <label>First Name</label>
+                          <%= f.text_field :name, autofocus: true, autocomplete: "name", required: true, class: "form-control" %>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-md-12 col-12">
+                          <label>Email</label>
+                          <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true, class: "form-control" %>
+                        </div>
+                      </div>
+
+                      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+                      <% end %>
+
+                      <div class="row">
+                        <div class="form-group col-12">
+                          <label>New Password <small class="text-small"> Leave blank if you don't want to chage.</small></label>
+                          <%= f.password_field :password, autocomplete: "new-password", required: true, class: "form-control" %>
+                          <% if @minimum_password_length %>
+                            <br />
+                            <em><%= @minimum_password_length %> characters minimum</em>
+                          <% end %>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-md-6">
+                          <label>Current Password</label>
+                          <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true, class: "form-control" %>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                          <label>Confirm Password</label>
+                          <%= f.password_field :current_password, autocomplete: "current-password", required: true, class: "form-control" %>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="card-footer text-right">
+                    <%= f.submit "Update", class: "btn btn-primary" %>
+                  </div>
+                </form>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <%= render "dashboard/footer" %>
+
+    </div>
   </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>

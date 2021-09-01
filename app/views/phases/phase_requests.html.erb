@@ -1,0 +1,74 @@
+
+
+<div id="app">
+    <div class="main-wrapper">
+
+      <%= render "dashboard/header" %>
+      <%= render "dashboard/navbar" %>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Phase Assignments</h1>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Phases</h4>
+                  <div class="card-header-form">
+                    <form>
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                          <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <th class="d-none"></th>
+                        <th>Phase Type</th>
+                        <th>Start Date</th>
+                        <th>Due Date</th>
+                        <th>Business Developer</th>
+                        <th>Lead Name</th>
+                        <th>Action</th>
+                      </tr>
+                      <% @phase_reqs.each do |phase| %>
+                      <tr>
+                        <td class="d-none"><%= phase.id %></td>
+                        <td><%= phase.phase_type %></td>
+                        <td>
+                          <%= phase.start_date.strftime("%B %d, %Y") %>
+                        </td>
+                        <td class="align-middle">
+                           <%= phase.due_date.strftime("%B %d, %Y") %>
+                        </td>
+                        <td>
+                          <%= phase.user.name %> <br>
+                        </td>
+                        <td><%= phase.lead.project_name %></td>
+                        <td>
+                          <%= link_to "Accept / Decline", "/phase_accept_decline/" + phase.id.to_s, class: "btn btn-primary" %>
+                        </td>
+                      </tr>
+                      <% end %>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <%= render "dashboard/footer" %>
+
+    </div>
+  </div>

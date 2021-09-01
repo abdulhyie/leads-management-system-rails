@@ -1,0 +1,11 @@
+<li class="media">
+  <%= image_tag "avatar-1.png", class: "mr-3 rounded-circle", width: "50" %>
+  <div class="media-body">
+    <% if comment.user.id == current_user.id %>
+      <%= link_to "Delete", comment_path(comment.id), method: :delete, class: "float-right text-danger", data: {confirm: "Are you sure?"} %>
+    <% end %>
+    <div class="media-title"><%= comment.user.name %> <small class="text-small"><%= comment.user.email %></small> </div>
+    <div class="text-primary text-small"><%= comment.created_at.strftime("%d %B, %Y, %I:%M %p") %></div>
+    <span class="text-small text-muted"><%= raw comment.comment_body %></span>
+  </div>
+</li>

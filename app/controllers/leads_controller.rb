@@ -7,6 +7,14 @@ class LeadsController < ApplicationController
     @lead = Lead.new
   end
 
+  def update
+    user.update(name: 'asdjbasjh')
+  end
+
+  def after_update
+    user.update(user_name: ;lm)
+  end
+
   def create
     @lead = Lead.new(strip_lead_parameters)
     if @lead.save
@@ -47,7 +55,9 @@ class LeadsController < ApplicationController
     else
       @lead.status = "Complete"
       @lead.save
-      flash[:notice] = "Lead has successfully been completed."
+      @project_lead = ProjectLead.new(project_name: @lead.project_name, lead_id: @lead.id)
+      @project_lead.save
+      flash[:notice] = "Lead has successfully been marked as sale and a project has generated."
     end
     redirect_to lead_path(params[:id])
   end

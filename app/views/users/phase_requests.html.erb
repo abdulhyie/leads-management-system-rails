@@ -55,7 +55,7 @@
                         </td>
                         <td><%= phase.lead.project_name %></td>
                         <td>
-                          <%= link_to "Accept / Decline", "/phase_accept_decline/" + phase.id.to_s, class: "btn btn-primary" %>
+                          <%= link_to "Accept / Decline", accept_decline_phase_path(phase), class: "btn btn-primary" %>
                         </td>
                       </tr>
                       <% end %>

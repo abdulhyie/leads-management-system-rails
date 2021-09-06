@@ -6,7 +6,7 @@
         <div class="card-header-action">
           <div class="">
             <% if @lead.status != "Complete" && @lead.user.id == current_user.id %>
-              <%= link_to "Mark as Sale", "/lead/mark_complete/" + @lead.id.to_s, method: :patch, class: "btn btn-primary" %>
+              <%= link_to "Mark as Sale", mark_complete_lead_path(@lead), method: :patch, class: "btn btn-primary" %>
             <% end %>
             <%# <a href="#" class="btn btn-primary">Mark as sale</a> %>
           </div>

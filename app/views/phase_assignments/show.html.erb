@@ -10,13 +10,13 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>All User Roles</h1>
+            <h1>All Engineers</h1>
           </div>
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h4>User Roles</h4>
+                  <h4>Engineers</h4>
                   <div class="card-header-form">
                     <form>
                       <div class="input-group">
@@ -38,12 +38,13 @@
                             <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                           </div>
                         </th>
-                        <th>User Name</th>
-                        <th>Role</th>
-                        <th>Date Assigned</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Added on</th>
+                        <th>Member Since</th>
                         <th>Action</th>
                       </tr>
-                      <% @user_roles.each do |user_role| %>
+                      <% @engineers.each do |engineer| %>
                       <tr>
                         <td class="p-0 text-center">
                           <div class="custom-checkbox custom-control">
@@ -51,13 +52,18 @@
                             <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                           </div>
                         </td>
-                        <td><%= user_role.user.name %></td>
+                        <td><%= engineer.user.name %></td>
                         <td class="align-middle">
-                          <%= user_role.role.role_name%>
+                          <%= engineer.user.email %>
                         </td>
-                        <td><%= user_role.created_at %></td>
                         <td>
-                          <%= link_to "Unassign Role", "/destroy_user_role/" + user_role.id.to_s, method: :delete, class: "btn btn-danger" %>
+                          <%= engineer.created_at %>
+                        </td>
+                        <td>
+                          <%= engineer.user.created_at %>
+                        </td>
+                        <td>
+                          <%= link_to "Remove From Phase", phase_assignment_path(engineer), method: :delete, class: "btn btn-danger" %>
                         </td>
                       </tr>
                       <% end %>

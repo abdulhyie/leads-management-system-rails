@@ -1,0 +1,8 @@
+<h4>Hi <%= @user.name %>,</h4>
+<br>
+<p><b><%= @phase.user.name %></b> has added you as an engineer in a phase in lead (<%= @phase.lead.project_name %>).</p>
+<br>
+<%= link_to "Click here to view the phase.", phase_url(@phase) %>
+<br>
+
+<p>Thanks & Regards</p>

@@ -26,18 +26,6 @@ class RolesController < ApplicationController
     end
   end
 
-  def user_roles
-    @user_roles = UserRole.all
-  end
-
-  def destroy_user_role
-    @user_role = UserRole.find(params[:id])
-    @user_role.destroy
-    flash[:notice] = "Assignment has successfully been deleted"
-
-    redirect_to user_roles_path
-  end
-
   private
   def strip_role_params
     params.require(:role).permit(:role_name)

@@ -10,13 +10,13 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>All Projects</h1>
+            <h1>All User Roles</h1>
           </div>
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h4>Project</h4>
+                  <h4>User Roles</h4>
                   <div class="card-header-form">
                     <form>
                       <div class="input-group">
@@ -32,24 +32,32 @@
                   <div class="table-responsive">
                     <table class="table table-striped">
                       <tr>
-                        <th>Project Name</th>
-                        <th>Start Date</th>
-                        <th>Lead Phases</th>
-                        <th>Assigned BD</th>
+                        <th>
+                          <div class="custom-checkbox custom-control">
+                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                          </div>
+                        </th>
+                        <th>User Name</th>
+                        <th>Role</th>
+                        <th>Date Assigned</th>
                         <th>Action</th>
                       </tr>
-                      <% @projects.each do |project| %>
+                      <% @user_roles.each do |user_role| %>
                       <tr>
-                        <td><%= project.project_name %></td>
-                        <td>
-                          <%= project.created_at.strftime("%m-%d-%Y") %>
+                        <td class="p-0 text-center">
+                          <div class="custom-checkbox custom-control">
+                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                          </div>
                         </td>
-                        <td>
-                          <%= project.lead.phases.size %> <br>
+                        <td><%= user_role.user.name %></td>
+                        <td class="align-middle">
+                          <%= user_role.role.role_name%>
                         </td>
-                        <td><%= project.lead.user.name %></td>
+                        <td><%= user_role.created_at %></td>
                         <td>
-                          <%= link_to "Lead Details", lead_path(project.lead.id), class: "btn btn-primary" %>
+                          <%= link_to "Unassign Role", user_role_path(user_role), method: :delete, class: "btn btn-danger" %>
                         </td>
                       </tr>
                       <% end %>

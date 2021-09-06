@@ -21,7 +21,7 @@
                   <div class="card-header-action">
                     <div class="">
                       <% if @phase.phase_status != "Complete" && @phase.user.id == current_user.id && @phase.phase_status != "Awaiting Manager" %>
-                        <%= link_to "Mark as Complete", "/phase/mark_complete/" + @phase.id.to_s, method: :patch, class: "btn btn-primary" %>
+                        <%= link_to "Mark as Complete", mark_complete_phase_path(@phase), method: :patch, class: "btn btn-primary" %>
                       <% end %>
                     </div>
                   </div>
@@ -105,10 +105,11 @@
                 </div>
                 <% if @phase.user.id == current_user.id && @phase.phase_status != "Awaiting Manager" && @phase.phase_status != "Complete" %>
                   <div class="card-footer">
-                    <a href=<%= "/phase/add_engineer/" + @phase.id.to_s %> class="btn btn-primary float-right">Add Engineers</a>
+                    <a href=<%= add_engineer_phase_path(@phase) %> class="btn btn-primary float-right">Add Engineers</a>
                   </div>
                 <% end %>
               </div>
+              <%= link_to "All Engineers", phase_assignment_path(@phase), class: "col-md-12 btn btn-primary" %>
             </div>
           </div>
 

@@ -12,7 +12,7 @@
 
             <div class="card-body">
               <p> <%= @phase.lead.user.name %> <b>(BD)</b> has assigned you a phase for <%= @phase.lead.project_name %>.</p>
-              <%= form_with model: @phase, url: "/set_phase_status/" + @phase.id.to_s do |f| %>
+              <%= form_with model: @phase, url: set_phase_status_phase_path(@phase) do |f| %>
                 <div class="form-group">
                   <%= f.label :manager_comment %><br />
                   <%= f.text_area(:manager_comment, autofocus: true, class: "form-control", id: "summernote") %>

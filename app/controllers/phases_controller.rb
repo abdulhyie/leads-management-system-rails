@@ -8,12 +8,25 @@ class PhasesController < ApplicationController
     @comment = Comment.new
   end
 
-  def new
-
+  def create
+    @lead = Lead.find(params[:lead_id])
+    @phase = @lead.phases.new(strip_phase_params)
+    if @phase.save
+      flash[:notice] = "Phase has been created. Email has been sent to the manager."
+      AlertUsersMailer.notify_manager(@phase.user, @phase).deliver
+      redirect_to lead_path(@lead)
+    else
+      flash[:alert] = "There was an error. Phase couldn't been added."
+      redirect_to lead_path(@lead)
+    end
   end
 
-  def phase_requests
-    @phase_reqs = current_user.phases.where(phase_status: "Awaiting Manager")
+  def destroy
+    @phase = Phase.find(params[:id])
+    @lead_id = @phase.lead.id
+    @phase.destroy
+    flash[:notice] = "Phase has successfully been deleted."
+    redirect_to lead_path(@lead_id)
   end
 
   def accept_decline
@@ -23,7 +36,7 @@ class PhasesController < ApplicationController
   def set_phase_status
     @phase = Phase.find(params[:id])
     @phase.update(strip_phase_params_update)
-    redirect_to phase_requests_path
+    redirect_to phase_requests_users_path
   end
 
   def add_engineer
@@ -36,18 +49,6 @@ class PhasesController < ApplicationController
 
   end
 
-  def create
-    @phase = Phase.new(strip_phase_params)
-    if @phase.save
-      flash[:notice] = "Phase has been created. Email has been sent to the manager."
-      AlertUsersMailer.notify_manager(current_user, @phase).deliver
-      redirect_to lead_path(@phase[:lead_id])
-    else
-      flash[:alert] = "There was an error. Phase couldn't been added."
-      redirect_to lead_path(@phase[:lead_id])
-    end
-  end
-
   def mark_complete
     @phase = Phase.find(params[:id])
     @phase.phase_status = "Complete"
@@ -57,8 +58,9 @@ class PhasesController < ApplicationController
   end
 
   private
+  
   def strip_phase_params
-    params.require(:phase).permit(:start_date, :due_date, :lead_id, :user_id, :phase_type, :phase_status)
+    params.require(:phase).permit(:start_date, :due_date, :user_id, :phase_type, :phase_status)
   end
 
   def strip_phase_params_update

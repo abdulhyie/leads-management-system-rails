@@ -42,7 +42,7 @@
                 <div class="card-header"><h4>Assign Multiple Engineers to this Phase</h4></div>
 
                 <div class="card-body">
-                  <%= form_with url: phase_assignment_generate_form_path, method: :get do |f| %>
+                  <%= form_with url: generate_form_phase_assignment_path, method: :get do |f| %>
                     <%= f.hidden_field :phase_id, value: @phase.id %>
                     <div class="row">
                       <div class="form-group col-12">
